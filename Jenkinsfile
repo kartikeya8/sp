@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Code Clone') {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/ksrepo9/sp24.git'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/kartikeya8/sp.git'
             }
 			}
 		stage('mvn version') {
