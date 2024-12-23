@@ -24,7 +24,7 @@ pipeline {
 		stage('Snyk Scan') {
 			steps {
 				sh 'chmod +x ./mvnw'
-				withCredentials([string(credentialsId: 'synk@latest, variable: 'SNYK_TOKEN')]) {
+				withCredentials([string(credentialsId: 'synk@latest', variable: 'SNYK_TOKEN')]) {
 					sh 'snyk auth $SNYK_TOKEN'
 					sh 'snyk test --json --severity-threshold=low'
 				}
