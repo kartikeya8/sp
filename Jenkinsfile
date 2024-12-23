@@ -12,6 +12,12 @@ pipeline {
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/kartikeya8/sp.git'
             }
 			}
+			
+		stage('Install Snyk') {
+			steps {
+				sh 'npm install -g snyk'
+			}
+			}
 		stage('Snyk Scan') {
 			steps {
 				sh 'chmod +x ./mvnw'
