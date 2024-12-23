@@ -16,9 +16,7 @@ pipeline {
 
         stage('Snyk Test') {
            steps {
-               script {
-                   // Run Snyk test
-                   withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
+               script {                  
                        sh 'snyk test --token=4b1e47f1-e1b1-4e5a-bdb7-811143cd9466'
                    }
                }
