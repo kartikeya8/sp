@@ -19,6 +19,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
                     sh """
+					    snyk auth 4b1e47f1-e1b1-4e5a-bdb7-811143cd9466
                         snyk monitor --org=kartikeya8 --project-id=08219a84-837d-471a-abbe-25b601a0a8f1 --json > report.json
                     """
                     echo "Snyk monitoring completed successfully."
@@ -39,4 +40,3 @@ pipeline {
         }
     }
 }
-
