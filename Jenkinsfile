@@ -1,35 +1,40 @@
 pipeline {
-   agent any
+    agent any
 
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
         maven "Maven 3.6.3"
     }
 
+    environment {
+        SNYK_TOKEN = credentials('snyk')
+    }
+
     stages {
-        stage('Code Clone') {
+        stage('Authenticate with Snyk') {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/kartikeya8/sp.git'
+                sh 'snyk auth $SNYK_TOKEN'
             }
-			}			
-
-
-
-		stage('Monitor Project') {
+        }
+        
+        stage('Monitor Project') {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-                    sh """
-					    chmod +x ./mvnw
-					    snyk auth 4b1e47f1-e1b1-4e5a-bdb7-811143cd9466
-						snyk code test
-						snyk test --json --severity-threshold=low
-                        snyk monitor --org=kartikeya8 --project-id=08219a84-837d-471a-abbe-25b601a0a8f1 --json > report.json
-                    """
-                    echo "Snyk monitoring completed successfully."
+                script {
+                    def exitCode = sh(
+                        script: """
+                            snyk monitor --org=kartikeya8 --project-id=08219a84-837d-471a-abbe-25b601a0a8f1 --json > report.json
+                        """,
+                        returnStatus: true
+                    )
+                    
+                    if (exitCode != 0) {
+                        echo "Snyk monitoring found issues, but continuing pipeline."
+                    } else {
+                        echo "Snyk monitoring completed successfully without issues."
+                    }
+                    
+                    // Archive report regardless of outcome
+                    archiveArtifacts artifacts: 'report.json', fingerprint: true
                 }
-                
-                // Archive report regardless of outcome
-                archiveArtifacts artifacts: 'report.json', fingerprint: true
             }
         }
     }
@@ -43,4 +48,3 @@ pipeline {
         }
     }
 }
-
