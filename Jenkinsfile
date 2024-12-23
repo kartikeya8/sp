@@ -85,11 +85,4 @@ pipeline {
 	}
 
 
-    post {
-        success {
-            echo 'Snyk monitoring completed successfully.'
-        }
-        failure {
-            echo 'Snyk monitoring failed.'
-        }
-    }
+   
