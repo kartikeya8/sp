@@ -13,11 +13,7 @@ pipeline {
             }
 			}
 			
-		stage('Install Snyk') {
-			steps {
-				sh 'sudo npm install -g snyk'
-			}
-			}
+
 		stage('Snyk Scan') {
 			steps {
 				sh 'chmod +x ./mvnw'
