@@ -19,6 +19,7 @@ pipeline {
 				sh 'chmod +x ./mvnw'
 				sh 'snyk auth 4b1e47f1-e1b1-4e5a-bdb7-811143cd9466'
 				sh 'snyk test --json --severity-threshold=low'
+				sh 'snyk monitor --severity-threshold=low
 				
 			}
 			}
