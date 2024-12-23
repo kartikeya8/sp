@@ -16,11 +16,6 @@ pipeline {
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/kartikeya8/sp.git'
             }
 			}
-		stage('SonarScan') {
-            steps {
-                sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=kspro -Dsonar.host.url=http://192.168.29.30:9000 -Dsonar.login=sqp_727cd2c07493015efb63de36da645a0faaf5ae01'      
-            }
-			}
 		stage('Snyk Scan') {
 			steps {
 				sh 'chmod +x ./mvnw'
@@ -28,7 +23,13 @@ pipeline {
 				sh 'snyk test --json --severity-threshold=low'
 				
 			}
-		}
+			}
+		stage('SonarScan') {
+            steps {
+                sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=kspro -Dsonar.host.url=http://192.168.29.30:9000 -Dsonar.login=sqp_727cd2c07493015efb63de36da645a0faaf5ae01'      
+            }
+			}
+	
 		stage('mvn version') {
             steps {
               sh 'mvn --version'    
