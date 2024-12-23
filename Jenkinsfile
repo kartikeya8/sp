@@ -16,7 +16,8 @@ pipeline {
 
         stage('Snyk Test') {
            steps {
-               script {                  
+               script {
+             {
                        sh 'snyk test --token=4b1e47f1-e1b1-4e5a-bdb7-811143cd9466'
                    }
                }
