@@ -22,6 +22,20 @@ pipeline {
 				
 			}
 			}
+			
+		stage('Monitor Project') {
+            steps {
+                sh '''
+                    snyk monitor --org=kartikeya8 --project-id=08219a84-837d-471a-abbe-25b601a0a8f1 --json > report.json
+                '''
+            }
+			}
+        stage('Publish Report') {
+            steps {
+                sh 'cat report.json'
+                archiveArtifacts artifacts: 'report.json', fingerprint: true
+            }
+			}
 		stage('SonarScan') {
             steps {
                 sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=kspro -Dsonar.host.url=http://192.168.29.30:9000 -Dsonar.login=sqp_727cd2c07493015efb63de36da645a0faaf5ae01'      
