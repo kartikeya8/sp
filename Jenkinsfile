@@ -27,6 +27,8 @@ pipeline {
                     """
                     echo "Snyk monitoring completed successfully."
                 }
+				sh 'cat report.json'
+                sh 'cat snyk_output.log'
                 
                 // Archive report regardless of outcome
                 archiveArtifacts artifacts: 'report.json', fingerprint: true
