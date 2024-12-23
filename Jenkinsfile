@@ -15,7 +15,7 @@ pipeline {
 			
 		stage('Install Snyk') {
 			steps {
-				sh 'npm install -g snyk'
+				sh 'sudo npm install -g snyk'
 			}
 			}
 		stage('Snyk Scan') {
