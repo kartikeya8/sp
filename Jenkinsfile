@@ -24,10 +24,9 @@ pipeline {
 		stage('Snyk Scan') {
 			steps {
 				sh 'chmod +x ./mvnw'
-				withCredentials([string(credentialsId: 'synk@latest', variable: 'SNYK_TOKEN')]) {
-					sh 'snyk auth $SNYK_TOKEN'
-					sh 'snyk test --json --severity-threshold=low'
-				}
+				sh 'snyk auth 4b1e47f1-e1b1-4e5a-bdb7-811143cd9466'
+				sh 'snyk test --json --severity-threshold=low'
+				
 			}
 		}
 		stage('mvn version') {
