@@ -32,52 +32,8 @@ pipeline {
                 archiveArtifacts artifacts: 'report.json', fingerprint: true
             }
         }
-		stage('mvn version') {
-            steps {
-              sh 'mvn --version'    
-            }
-			}
-        
-		stage('SonarScan') {
-            steps {
-                sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=kspro -Dsonar.host.url=http://192.168.29.30:9000 -Dsonar.login=sqp_727cd2c07493015efb63de36da645a0faaf5ae01'      
-            }
-			}
-	
-	
-		stage('mvn clean') {
-            steps {
-                sh 'mvn clean'      
-            }
-			}
-		stage('mvn validate') {
-            steps {
-                sh 'mvn validate'      
-            }
-			}
-		stage('mvn Compile') {
-            steps {
-                sh 'mvn compile'      
-            }
-			}
-		stage('mvn Test') {
-            steps {
-                sh 'mvn test'      
-            }
-			}
-	
-        			
-		stage('mvn Package') {
-            steps {
-                sh 'mvn package'      
-            }
-			}
-	
-	
-	
-	
-	}
-
+		}
+		
     post {
         success {
             echo 'Pipeline completed successfully.'
