@@ -28,7 +28,7 @@ pipeline {
                     echo "Snyk monitoring completed successfully."
                 }
                 
-                // Archive report regardless of outcome
+                // Archive report regardless of outcome.
                 archiveArtifacts artifacts: 'report.json', fingerprint: true
             }
         }
@@ -43,6 +43,7 @@ pipeline {
         }
     }
 }
+
 
 
 	
