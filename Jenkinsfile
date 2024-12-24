@@ -32,6 +32,11 @@ pipeline {
                 archiveArtifacts artifacts: 'report.json', fingerprint: true
             }
         }
+		stage('mvn version') {
+            steps {
+              sh 'mvn --version'    
+            }
+			}
         
 		stage('SonarScan') {
             steps {
@@ -39,11 +44,7 @@ pipeline {
             }
 			}
 	
-		stage('mvn version') {
-            steps {
-              sh 'mvn --version'    
-            }
-			}	
+	
 		stage('mvn clean') {
             steps {
                 sh 'mvn clean'      
